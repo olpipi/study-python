@@ -1,0 +1,11 @@
+dist: trusty
+sudo: false
+language: python
+os:
+    - linux
+python:
+    - 2.7
+    - 3.6
+
+script:
+    - python tests.py
