@@ -4,10 +4,18 @@ class Polynomial:
 	
 	def __init__(self, coeffs):
 		self.m_coeffs = list()
-		for it in coeffs:
-			self.m_coeffs.append(float(it))
+		self.parse_coeffs(coeffs)
 
-		
+	def parse_coeffs(self, coeffs):
+		if (type(coeffs) is list) or (type(coeffs) is tuple) or (type(coeffs) is range):
+			for it in coeffs:
+				self.m_coeffs.append(float(it))
+		elif (isinstance(coeffs, Polynomial)):
+			self.m_coeffs.extend(coeffs.m_coeffs)
+		else:
+			raise ValueError("Error! Unknown constructor")
+
+
 	def polynomial_to_string(self, var_string = 'x', fraction = 2):
 		if all(coeff == 0 for coeff in self.m_coeffs):
 			return '0'
@@ -47,6 +55,12 @@ class Polynomial:
 
 	def __len__(self):
 		return len(self.m_coeffs)
+
+	def __eq__(self, pl):
+		pl = Polynomial(pl)
+		if len(pl) != len(self):
+			return False
+		return True
 
 
 if __name__ == "__main__":
