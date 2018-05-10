@@ -12,6 +12,10 @@ class Polynomial:
 				self.m_coeffs.append(float(it))
 		elif (isinstance(coeffs, Polynomial)):
 			self.m_coeffs.extend(coeffs.m_coeffs)
+		elif type(coeffs) is str:
+			self.m_coeffs = [float(c) for c in coeffs.split(",")]
+		elif (type(coeffs) is float) or (type(coeffs) is int):
+			self.m_coeffs.append(float(coeffs))
 		else:
 			raise ValueError("Error! Unknown constructor")
 
@@ -60,7 +64,14 @@ class Polynomial:
 		pl = Polynomial(pl)
 		if len(pl) != len(self):
 			return False
+		for i, j in zip(self.m_coeffs, pl.m_coeffs):
+			if i != j:
+				return False
 		return True
+
+def __ne__(self, pl):
+        pl = Polynomial(pl)
+        return False if self.__eq__(pl) == True else True
 
 
 if __name__ == "__main__":
