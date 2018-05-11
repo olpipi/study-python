@@ -92,7 +92,7 @@ class Polynomial:
 
 	def __add__(self, other):
 		other = Polynomial(other)
-		pm = Polynomial(self.coeffs)
+		pm = Polynomial(self.m_coeffs)
 		pm += other
 		return pm
 
