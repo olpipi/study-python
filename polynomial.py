@@ -53,6 +53,15 @@ class Polynomial:
 				res_str += sign + str_coeff + str_power
 		return res_str
 
+	def add_zero_coeffs(self, other):
+		if len(self) < len(other):
+			self.m_coeffs.reverse()
+			self.m_coeffs.extend([0 for i in range(len(other) - len(self))])
+			self.m_coeffs.reverse()
+		else:
+			other.m_coeffs.reverse()
+			other.m_coeffs.extend([0 for i in range(len(self) - len(other))])
+			other.m_coeffs.reverse()
 
 	def __str__(self):
 		return self.polynomial_to_string()
@@ -60,18 +69,81 @@ class Polynomial:
 	def __len__(self):
 		return len(self.m_coeffs)
 
-	def __eq__(self, pl):
-		pl = Polynomial(pl)
-		if len(pl) != len(self):
+	def __eq__(self, other):
+		other = Polynomial(other)
+		if len(other) != len(self):
 			return False
-		for i, j in zip(self.m_coeffs, pl.m_coeffs):
+		for i, j in zip(self.m_coeffs, other.m_coeffs):
 			if i != j:
 				return False
 		return True
 
-def __ne__(self, pl):
-        pl = Polynomial(pl)
-        return False if self.__eq__(pl) == True else True
+	def __ne__(self, other):
+		other = Polynomial(other)
+		return False if self.__eq__(other) == True else True
+
+	def __iadd__(self, other):
+		other = Polynomial(other)
+		finLen = max(len(self) , len(other))
+		self.add_zero_coeffs(other)
+		for cId in range(0, finLen):
+			self.m_coeffs[cId] += other.m_coeffs[cId]
+		return self
+
+	def __add__(self, other):
+		other = Polynomial(other)
+		pm = Polynomial(self.coeffs)
+		pm += other
+		return pm
+
+	def __radd__(self, other):
+		other = Polynomial(other)
+		pm = Polynomial(self.m_coeffs)
+		other += pm
+		return other
+
+	def __isub__(self, other):
+		other = Polynomial(other)
+		finLen = max(len(self) , len(other))
+		self.add_zero_coeffs(other)
+		for it in range(0, finLen):
+			self.m_coeffs[it] -= other.m_coeffs[it]
+		return self
+
+	def __sub__(self, other):
+		other = Polynomial(other)
+		pm = Polynomial(self.m_coeffs)
+		pm -= other
+		return pm
+
+	def __rsub__(self, other):
+		other = Polynomial(other.m_coeffs)
+		pm = Polynomial(self.m_coeffs)
+		other -= pm
+		return other
+
+	def __imul__(self, other):
+		other = Polynomial(other)
+		pm = Polynomial([0 for i in range(len(other) + len(self) - 1)])
+		for i1, val1 in enumerate(self.m_coeffs):
+			for i2, val2 in enumerate(other.m_coeffs):
+				pm.m_coeffs[i1 + i2] += val1 * val2
+		self.m_coeffs = []
+		for it in pm.m_coeffs:
+			self.m_coeffs.append(it)
+		return self
+
+	def __mul__(self, other):
+		other = Polynomial(other)
+		pm = Polynomial(self.m_coeffs)
+		pm *= other
+		return pm
+
+	def __rmul__(self, other):
+		other = Polynomial(other)
+		pm = Polynomial(self.m_coeffs)
+		other *= pm
+		return other
 
 
 if __name__ == "__main__":
