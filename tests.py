@@ -14,22 +14,22 @@ class TestPolynomial(unittest.TestCase):
 		pass
 
 #test constructor and str
-	def test_method__str__long(self):
+	def test_method_str_long(self):
 		self.pm = Poly(range(10))
 		self.assertEqual(self.pm.__str__(), "x^8+2x^7+3x^6+4x^5+5x^4+6x^3+7x^2+8x+9")
 
-	def test_method__str__single_val(self):
+	def test_method_str_single_val(self):
 		self.pm = Poly(76543)
 		self.assertEqual(self.pm.__str__(), "76543")
 
-	def test_method__str__list(self):
+	def test_method_str_list(self):
 		self.assertEqual(self.pm.__str__(), "x^3+2x^2+3x+4")
 
-	def test_method__str__list_float(self):
+	def test_method_str_list_float(self):
 		self.pm = Poly([17.5, 1.3, -1.746, 8])
 		self.assertEqual(self.pm.__str__(), "17.5x^3+1.3x^2-1.75x+8")
 
-	def test_method__str__tuple(self):
+	def test_method_str_tuple(self):
 		self.pm = Poly((1, 2, 3, 4))
 		self.assertEqual(self.pm.__str__(), "x^3+2x^2+3x+4")
 
